@@ -1,17 +1,20 @@
-import { useQuery, gql } from "@apollo/client";
+import React from "react";
+import { useQuery } from "@apollo/client";
+import { CLIENTS } from "../apollo/queries/clients";
+import AddClientModal from "./AddClientModal";
+import Client from "./Client";
+import { Link } from "react-router-dom";
 
-import "./App.css";
-import ClientsList from "./components/ClientsList";
-import { CLIENTS } from "./apollo/queries";
-
-function App() {
+export default function Clients() {
   const { loading, error, data } = useQuery(CLIENTS);
 
   if (loading) return <div>Loading....</div>;
   if (error) return <div>Something went wrong!</div>;
 
   return (
-    <div className="container">
+    <>
+      <AddClientModal />
+      <Link to={"/projects"}>Projects</Link>
       <table className="table table-hover mt-3">
         <thead>
           <tr>
@@ -23,12 +26,10 @@ function App() {
         </thead>
         <tbody>
           {data?.clients.map((client) => (
-            <ClientsList key={client.id} client={client} />
+            <Client key={client.id} client={client} />
           ))}
         </tbody>
       </table>
-    </div>
+    </>
   );
 }
-
-export default App;

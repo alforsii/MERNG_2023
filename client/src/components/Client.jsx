@@ -1,19 +1,8 @@
-import { useMutation, gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { FaTrash } from "react-icons/fa";
-import { CLIENTS } from "../apollo/queries";
+import { CLIENTS, DELETE_CLIENT } from "../apollo/queries/clients";
 
-const DELETE_CLIENT = gql`
-  mutation ($id: ID!) {
-    deleteClient(id: $id) {
-      id
-      email
-      name
-      phone
-    }
-  }
-`;
-
-export default function ClientsList({ client }) {
+export default function Client({ client }) {
   const [deleteClient] = useMutation(DELETE_CLIENT, {
     variables: {
       id: client.id,
