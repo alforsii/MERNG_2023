@@ -8,7 +8,7 @@ export default function AddProjectModal() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [clientId, setClientId] = useState("");
-  const [status, setStatus] = useState("new");
+  const [status, setStatus] = useState("Not Started");
 
   const { loading, error, data } = useQuery(CLIENTS);
 
@@ -31,20 +31,20 @@ export default function AddProjectModal() {
     // console.log({ name, email, phone });
     addProject(name, description, status, clientId);
 
-    // setName("");
-    // setDescription("");
-    // setStatus("new");
-    // setClientId("");
+    setName("");
+    setDescription("");
+    setStatus("Not Started");
+    setClientId("");
   };
 
-  useEffect(() => {
-    return () => {
-      setName("");
-      setDescription("");
-      setStatus("new");
-      setClientId("");
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     setName("");
+  //     setDescription("");
+  //     setStatus("new");
+  //     setClientId("");
+  //   };
+  // }, []);
 
   if (loading) return <div>Loading....</div>;
   if (error) return <div>Something went wrong!</div>;
@@ -128,9 +128,9 @@ export default function AddProjectModal() {
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
                   >
-                    <option value={"new"}>Not Started</option>
-                    <option value={"progress"}>In Progress</option>
-                    <option value={"completed"}>Completed</option>
+                    <option value={"Not Started"}>Not Started</option>
+                    <option value={"In Progress"}>In Progress</option>
+                    <option value={"Completed"}>Completed</option>
                   </select>
                 </div>
                 <div className="modal-footer">

@@ -33,7 +33,9 @@ const ProjectType = new GraphQLObjectType({
     status: { type: GraphQLString },
     client: {
       type: ClientType,
-      resolve: async (parent, args) => Client.findById(parent.clientId),
+      resolve: async (parent, args) => {
+        return await Client.findById(parent.clientId);
+      },
     },
   }),
 });
@@ -54,7 +56,9 @@ const query = new GraphQLObjectType({
     project: {
       type: ProjectType,
       args: { id: { type: GraphQLID } },
-      resolve: async (parent, args) => await Project.findById(args.id),
+      resolve: async (parent, args) => {
+        return await Project.findById(args.id);
+      },
     },
     projects: {
       type: new GraphQLList(ProjectType),
@@ -102,15 +106,16 @@ const mutation = new GraphQLObjectType({
         description: { type: GraphQLNonNull(GraphQLString) },
         clientId: { type: GraphQLNonNull(GraphQLID) },
         status: {
-          type: new GraphQLEnumType({
-            name: "ProjectStatus",
-            values: {
-              new: { value: "Not Started" },
-              progress: { value: "In Progress" },
-              completed: { value: "Completed" },
-            },
-          }),
-          defaultValue: "Not Started",
+          type: GraphQLNonNull(GraphQLString),
+          // type: new GraphQLEnumType({
+          //   name: "ProjectStatus",
+          //   values: {
+          //     new: { value: "Not Started" },
+          //     progress: { value: "In Progress" },
+          //     completed: { value: "Completed" },
+          //   },
+          // }),
+          // defaultValue: "Not Started",
         },
       },
       resolve: async (parent, args) => {

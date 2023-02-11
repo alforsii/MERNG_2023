@@ -38,7 +38,7 @@ const CREATE_PROJECT = gql`
     $name: String!
     $description: String!
     $clientId: ID!
-    $status: ProjectStatus!
+    $status: String!
   ) {
     createProject(
       name: $name
